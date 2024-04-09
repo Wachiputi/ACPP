@@ -17,7 +17,8 @@ import SignUp from "./pages/signup";
 import {Services,ServicesOne,ServicesTwo,ServicesThree} from "./pages/Services";
 import Contact from "./pages/ContactUs";
 import Support from "./pages/Support";
- 
+import Signin from "./pages/Signin";
+
 
 
 
@@ -42,6 +43,8 @@ function App() {
 
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/support" element={<Support />} />
+                <Route path="/signin" element={<Signin />} />
+
 
 
             </Routes>
