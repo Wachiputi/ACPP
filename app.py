@@ -82,3 +82,7 @@ filtered_df = filtered_df[(filtered_df['commodity'] == option) & (filtered_df['d
 st.subheader('Filtered Data only left with required columns')
 st.write(filtered_df)
 
+# Generate trend graph for the fully filtered data
+if not filtered_df.empty:
+    fig = px.line(filtered_df, x='date', y='price', title='Historical Prices Trend', labels={'price': 'Price', 'date': 'Date'})
+    st.plotly_chart(fig)
