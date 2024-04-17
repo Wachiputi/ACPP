@@ -12,7 +12,7 @@ const Blogs = () => {
                 height: "100vh",
             }}
         >
-            <h1>welcome to agricultural commodity price projection</h1>
+            <h3>welcome to agricultural commodity price projection</h3>
         </div>
     );
 };

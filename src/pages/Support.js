@@ -5,7 +5,7 @@ import React from "react";
 const Support = () => {
 	return (
 		<div className="support">
-			<h1>ACPP Support us</h1>
+			<h3>ACPP Support us</h3>
 		</div>
 	);
 };

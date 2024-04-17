@@ -6,16 +6,7 @@ const Signin = () => {
     <div>
       <p>
 
-      ompiling...
-One of your dependencies, babel-preset-react-app, is importing the    
-"@babel/plugin-proposal-private-property-in-object" package without   
-declaring it in its dependencies. This is currently working because   
-"@babel/plugin-proposal-private-property-in-object" is already in your
-node_modules folder for unrelated reasons, but it may break at any time.
-
-babel-preset-react-app is part of the create-react-app project, which
-is not maintianed anymore. It is thus unlikely that this bug will
-Failed to compile.
+      "Welcome to our Agricultural Commodity Price Projection! Step into the future of farming with us as we unveil our latest forecasts for the upcoming harvest season. Discover the anticipated prices of staple crops like wheat, corn, and soybeans, and gain valuable insights into market trends and fluctuations. Whether you're a farmer, trader, or enthusiast, our projections will guide you towards informed decisions and successful ventures in the agricultural industry. Join us on this exciting journey of growth and prosperity in agriculture!"
 
       </p>
 
