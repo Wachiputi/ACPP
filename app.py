@@ -86,3 +86,82 @@ st.write(filtered_df)
 if not filtered_df.empty:
     fig = px.line(filtered_df, x='date', y='price', title='Historical Prices Trend', labels={'price': 'Price', 'date': 'Date'})
     st.plotly_chart(fig)
+
+if forecast_button:
+    # Further filter data to include only the historical prices for the selected market
+    historical_data = ft_data[(ft_data['commodity'] == option) & (ft_data['district'] == selected_district) & (ft_data['market'] == selected_market)]
+    
+    if model_choice == 'LSTM':
+        # Prepare the data for LSTM
+        def prepare_data_for_lstm(data, scaler, seq_length=10):
+            # Convert price column to array
+            prices = data['price'].values
+
+            # Normalize prices using the provided scaler
+            prices_normalized = scaler.fit_transform(prices.reshape(-1, 1))
+
+            # Create sequences and corresponding targets
+            sequences = []
+            targets = []
+            for i in range(len(prices_normalized) - seq_length):
+                sequences.append(prices_normalized[i:i+seq_length])
+                targets.append(prices_normalized[i+seq_length])
+
+            return np.array(sequences), np.array(targets), scaler
+
+        # Create a scaler object
+        scaler = MinMaxScaler()
+
+        # Prepare data for LSTM
+        X, y, scaler = prepare_data_for_lstm(historical_data, scaler)
+
+        # Split data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        # Increase model complexity
+        model = Sequential([
+            LSTM(100, return_sequences=True, input_shape=(X_train.shape[1], X_train.shape[2])),
+            LSTM(100),
+            Dense(1)
+        ])
+
+        # Increase training duration and use early stopping
+        early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+        # Hyperparameter tuning
+        learning_rate = 0.001
+        optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+
+        # Compile the model with the specified optimizer
+        model.compile(optimizer=optimizer, loss='mse')
+
+        # Train the model with early stopping
+        history = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test), callbacks=[early_stopping])
+
+        # Evaluate the model
+        mse = model.evaluate(X_test, y_test)
+        st.write(f'Mean Squared Error: {mse}')
+
+        # Calculate R2 score
+        y_pred = model.predict(X_test)
+        r2 = r2_score(y_test, y_pred)
+        st.write(f'R2 Score: {r2}')
+
+        mae = mean_absolute_error(y_test, y_pred)
+        st.write(f'Mean Absolute Error (MAE): {mae}')
+
+        mape = mean_absolute_percentage_error(y_test, y_pred)
+        st.write(f'Mean Absolute Percentage Error (MAPE): {mape * 100:.2f}%')
+
+        # Forecasting for the specified number of days
+        last_sequence = X_test[-1]
+        forecast_prices_normalized = []
+        for _ in range(num_days_forecast):
+            next_price = model.predict(last_sequence[np.newaxis, :, :])
+            forecast_prices_normalized.append(next_price)
+            last_sequence = np.append(last_sequence[1:], next_price, axis=0)
+
+        # Inverse transform the forecasted prices
+        forecast_prices = scaler.inverse_transform(np.array(forecast_prices_normalized).reshape(-1, 1))
+
+   
