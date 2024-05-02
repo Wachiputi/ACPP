@@ -164,4 +164,40 @@ if forecast_button:
         # Inverse transform the forecasted prices
         forecast_prices = scaler.inverse_transform(np.array(forecast_prices_normalized).reshape(-1, 1))
 
-   
+    elif model_choice == 'ARIMA':
+        # Prepare data for ARIMA
+        arima_data = historical_data.set_index('date')['price']
+        arima_data = arima_data.astype(float)  # Ensure the data is of float type
+        arima_model = sm.tsa.ARIMA(arima_data, order=(5, 1, 0))
+        arima_result = arima_model.fit()
+        forecast_prices = arima_result.forecast(steps=num_days_forecast)
+        forecast_dates = [arima_data.index[-1] + datetime.timedelta(days=i) for i in range(1, num_days_forecast + 1)]
+        forecast_prices = np.array(forecast_prices).reshape(-1, 1)
+
+    elif model_choice == 'Prophet':
+        # Prepare data for Prophet with log transformation
+        prophet_data = historical_data[['date', 'price']].rename(columns={'date': 'ds', 'price': 'y'})
+        prophet_data['y'] = np.log(prophet_data['y'])  # Log transform the prices
+        prophet_model = Prophet()
+        prophet_model.fit(prophet_data)
+        future = prophet_model.make_future_dataframe(periods=num_days_forecast)
+        forecast = prophet_model.predict(future)
+        forecast['yhat'] = np.exp(forecast['yhat'])  # Exponentiate the results to get back to original scale
+        forecast_prices = forecast['yhat'].values[-num_days_forecast:]
+        forecast_dates = forecast['ds'].dt.date.values[-num_days_forecast:]
+
+    # Generate dates for the forecasted prices 
+    if model_choice != 'ARIMA' and model_choice != 'Prophet':
+        forecast_dates = [datetime.date.today() + datetime.timedelta(days=i) for i in range(num_days_forecast)]
+
+    # Display the predicted prices in a table
+    st.write("Predicted Prices for the next period:")
+    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Predicted Price': forecast_prices.flatten()})
+    st.write(forecast_df)
+
+    # Generate graph for the forecasted prices
+    fig_forecast = go.Figure()
+    fig_forecast.add_trace(go.Scatter(x=filtered_df['date'], y=filtered_df['price'], mode='lines', name='Historical Prices'))
+    fig_forecast.add_trace(go.Scatter(x=forecast_dates, y=forecast_prices.flatten(), mode='lines', name='Forecasted Prices'))
+    fig_forecast.update_layout(title='Price Forecast', xaxis_title='Date', yaxis_title='Price')
+    st.plotly_chart(fig_forecast)
