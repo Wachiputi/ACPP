@@ -13,7 +13,7 @@ export const Services = () => {
 export const ServicesOne = () => {
 	return (
 		<div className="services">
-			<h3>prediction here</h3>
+			<h1>prediction here</h1>
 		</div>
 	);
 };

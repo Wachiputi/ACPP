@@ -1,8 +1,9 @@
 // pages/annual.js
  
 import React from "react";
+//import Home from ".";
  
-const AnnualReport = () => {
+const Home = () => {
     return (
         <div
             style={{
@@ -12,9 +13,9 @@ const AnnualReport = () => {
                 height: "100vh",
             }}
         >
-            <h1>Annual Report</h1>
+            <h1>Home</h1>
         </div>
     );
 };
  
-export default AnnualReport;
+export default Home;

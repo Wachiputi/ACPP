@@ -37,19 +37,19 @@ export const SidebarData = [
 		subNav: [
 			{
 				title: "prediction",
-				path: "/services/services1",
+				path: "/services/prediction",
 				icon: <IoIcons.IoIosPaper />,
 				cName: "sub-nav",
 			},
 			{
 				title: "analysis",
-				path: "/services/services2",
+				path: "/services/analysis",
 				icon: <IoIcons.IoIosPaper />,
 				cName: "sub-nav",
 			},
 			{
-				title: "reccomendations",
-				path: "/services/services3",
+				title: "recomendations",
+				path: "/services/recommendations",
 				icon: <IoIcons.IoIosPaper />,
 			},
 		],

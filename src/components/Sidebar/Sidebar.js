@@ -10,7 +10,7 @@ import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
 
 const Nav = styled.div`
-	background: #15171c;
+	background: #228B22;
 	height: 80px;
 	display: flex;
 	justify-content: flex-start;
@@ -27,7 +27,7 @@ const NavIcon = styled(Link)`
 `;
 
 const SidebarNav = styled.nav`
-	background: #15171c;
+	background: #228B22;
 	width: 250px;
 	height: 100vh;
 	display: flex;
@@ -61,10 +61,10 @@ const Sidebar = () => {
 						style={{
 							textAlign: "center",
 							marginLeft: "200px",
-							color: "green",
+							color: "white",
 						}}
 					>
-						AGRI-COM PRICE PROJECTION
+						WELCOME TO YIELDWISE
 					</h1>
 				</Nav>
 				<SidebarNav sidebar={sidebar}>

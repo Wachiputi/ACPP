@@ -23,8 +23,8 @@ const Signin = () => {
   <div className="card p-4"> 
     <h2 className="text-center mb-4">Login</h2> 
     <div className="mb-3"> 
-      <label htmlFor="inputEmail" className="form-label">Email address</label>
-      <input type="email" className="form-control" id="inputEmail" placeholder="name@example.com" />
+      <label htmlFor="inputEmail" className="form-label">Email</label>
+      <input type="email" className="form-control" id="inputEmail" placeholder="fadakingpin@gmail.com" />
     </div>
     <div className="mb-3"> 
       <label htmlFor="inputPassword" className="form-label">Password</label>
@@ -39,10 +39,7 @@ const Signin = () => {
 
   </div>
 </div>
-
-
-
-
+ 
   )
 }
 
