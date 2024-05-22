@@ -98,3 +98,50 @@
 h7{
   text-align: center;
 }
+
+/*for the analysing page*/
+.services {
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > div {
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+input {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 10px;
+  color: #333;
+}
+
+button {
+  padding: 20px;
+  font-size: 16px;
+  background-color: #057508;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+img {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+}
