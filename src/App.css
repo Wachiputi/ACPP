@@ -115,23 +115,28 @@ form > div {
 
 label {
   margin-bottom: 5px;
+  font-size: 20px;
   font-weight: bold;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 input {
-  padding: 8px;
-  font-size: 16px;
+  padding: 5px;
+  font-size: 12px;
   border-radius: 10px;
-  color: #333;
+  color: #051103;
+}
+input:hover{
+  outline:inset;
+  color: #15f00e;
 }
 
 button {
-  padding: 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 12px;
   background-color: #057508;
   color: white;
-  border: none;
+  border:none;
   cursor: pointer;
   border-radius: 30px;
 }
@@ -144,4 +149,13 @@ img {
   margin-top: 20px;
   max-width: 100%;
   height: auto;
+  background-color: #939cad;
 }
+/*.support{
+  background-image:url(./imagename.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100dvh;
+  width: 100vw;
+
+}*/
