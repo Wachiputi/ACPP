@@ -13,13 +13,11 @@ export const Services = () => {
 };
 
 
-
-
 export const ServicesOne = () => {
     const [formData, setFormData] = useState({
         commodity: '',
-        startDate: '',
-        endDate: '',
+        //startDate: '',
+        //endDate: '',
         district: '',
         market: '',
         daysToForecast: '' // Added new feature
@@ -70,7 +68,7 @@ export const ServicesOne = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <label>Start Date:</label>
                         <input
                             type="date"
@@ -87,7 +85,7 @@ export const ServicesOne = () => {
                             value={formData.endDate}
                             onChange={handleChange}
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <label>District:</label>
                         <input

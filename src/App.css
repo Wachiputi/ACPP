@@ -132,13 +132,15 @@ input:hover{
 }
 
 button {
-  padding: 10px;
+  padding: 5px;
   font-size: 12px;
   background-color: #057508;
   color: white;
   border:none;
   cursor: pointer;
   border-radius: 30px;
+  width: 100px;
+  height: 35px;
 }
 
 button:hover {
