@@ -159,6 +159,45 @@ def forecast_prices():
     except Exception as e:
         logging.error(f"Error during forecasting: {e}")
         return jsonify({"error": str(e)}), 400
+# Route to plot historical data
+@app.route('/historical_data_plot', methods=['POST'])
+def plot_historical_data():
+    req_data = request.get_json()
+    logging.debug(f"Received request for plotting historical data: {req_data}")
+
+    try:
+        option = req_data['option']
+        selected_district = req_data['selected_district']
+        selected_market = req_data['selected_market']
+        start_date_str = req_data['start_date']
+        end_date_str = req_data['end_date']
+
+        # Convert start_date and end_date to datetime.date
+        start_date = datetime.datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end_date = datetime.datetime.strptime(end_date_str, '%Y-%m-%d').date()
+
+        # Filter historical data based on the provided parameters
+        historical_data = data[(data['commodity'] == option) &
+                               (data['district'] == selected_district) &
+                               (data['market'] == selected_market) &
+                               (pd.to_datetime(data['date'], errors='coerce').dt.date >= start_date) &
+                               (pd.to_datetime(data['date'], errors='coerce').dt.date <= end_date)]
+
+        if historical_data.empty:
+            return jsonify({"error": "No historical data available for the given filters."}), 400
+
+        # Prepare JSON response
+        response_data = {
+            "historical_data": historical_data.to_dict(orient='records'),
+            "message": "Historical data retrieved successfully."
+        }
+
+        return jsonify(response_data), 200
+
+    except Exception as e:
+        logging.error(f"Error during plotting historical data: {e}")
+        return jsonify({"error": str(e)}), 400
+
 
 if __name__ == '__main__':
     app.run(debug=True)
