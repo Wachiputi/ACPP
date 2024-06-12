@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import {About,AboutUsOne,AboutUsTwo} from "./pages/About";
+import {About,AboutUsOne,AboutUsTwo} from "./pages/about";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import Home from "./pages";
 import Events from "./pages/events";
