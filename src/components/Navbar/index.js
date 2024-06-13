@@ -9,8 +9,8 @@ const Navbar = () => {
             <Nav>
                 <Bars />
  
-                <NavMenu>
-                    <NavLink to="/home" activeStyle>
+                <NavMenu className="navMenu">
+                    <NavLink to="/Home" activeStyle>
                         Home
                     </NavLink>
                     <NavLink to="/about-us" >
@@ -25,17 +25,17 @@ const Navbar = () => {
                     <NavLink to="/blogs" activeStyle>
                         Blogs
                     </NavLink>
-                    <NavLink to="/sign-up" activeStyle>
+                    {/* <NavLink to="/sign-up" activeStyle>
                         Sign Up
-                    </NavLink>
+                    </NavLink> */}
                     {/* Second Nav */}
                     {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
                 </NavMenu>
-                <NavBtn>
+                {/* <NavBtn>
                     <NavBtnLink to="/signin">
                         Sign In
                     </NavBtnLink>
-                </NavBtn>
+                </NavBtn> */}
             </Nav>
         </>
     );
