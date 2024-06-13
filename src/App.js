@@ -1,42 +1,44 @@
-//filename -App.js
-import React from "react";
-import "./App.css";
-import Navbar from "./components/Navbar";
-// import Sidebar from "./components/Sidebar/Sidebar";
-import {About,AboutUsOne,AboutUsTwo} from "./pages/about";
-import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
-import Home from "./pages";
-import Events from "./pages/events";
-import AnnualReport from "./pages/index";
-import Teams from "./pages/team";
-// import SignUp from "./pages/signup";
-import {Services,ServicesOne,ServicesTwo,ServicesThree} from "./pages/Services";
-import Contact from "./pages/ContactUs";
-import Support from "./pages/Support";
-// import Signin from "./pages/Signin";
-function App() {
-    return (
-        <Router>
-            <Navbar />
-            {/* <Sidebar /> */}
-            <Routes>
-                <Route path="/Home" element={<Home />} />
-                <Route path="/about-us" element={<About/>} />
-                <Route path="/about-us/aim" element={<AboutUsOne/>} />
-                <Route path="/about-us/vision" element={<AboutUsTwo/>} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/annual" element={<AnnualReport />} />
-                <Route path="/team" element={<Teams />} />
-                {/* <Route path="/sign-up" element={<SignUp />} /> */}
-                <Route path="/services" element={<Services />} />
-                <Route path="/services/prediction" element={<ServicesOne />} />
-                <Route path="/services/analysis" element={<ServicesTwo />} />
-                <Route path="/services/recommendations" element={<ServicesThree />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/support" element={<Support />} />
-                {/* <Route path="/signin" element={<Signin />} /> */}
-            </Routes>
-        </Router>
-    );
-} 
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/home/Home';
+import Login from './components/login/Login';
+import SignUp from './components/signup/SignUp';
+import Dashboard from './components/dashboard/Dashboard';
+import Profile from './components/profile/Profile';
+import Subscription from './components/subscription/Subscription';
+import Predictions from './components/predictions/Predictions';
+import TrendAnalysis from './components/predictions/TrendAnalysis';
+// import ViewCrops from './components/ViewCrops';
+import NewsFeed from './components/newsfeeds/NewsFeed';
+import Navbar from './components/navbar/Navbar';
+import About from './components/About/About';
+import getStarted from './components/predictions/getStarted';
+// import MostSearchedCrops from './components/MostSearchedCrops';
+
+const App = () => {
+  return (
+    <div className="App">
+
+   
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/get-started" Component={getStarted} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/subscription" element={<Subscription />} />
+        <Route path="/predictions" element={<Predictions />} />
+        <Route path="/trend-analysis" element={<TrendAnalysis/>} />
+        <Route path="/newsfeed" element={<NewsFeed />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
+    </div>
+  );
+}
+
 export default App;

@@ -1,0 +1,154 @@
+/* Overall page styles */
+.trend-analysis-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    background-color: #040811;
+}
+
+/* Title styles */
+.trend-analysis-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fcfcfc;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+/* Header styles */
+.trend-analysis-header {
+    width: 100%;
+    background-color: #040811;
+    padding-top: 40px;
+    color: #fcfcfc;
+    text-align: center;
+}
+
+/* Content styles */
+.trend-analysis-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 6rem;
+}
+
+/* Sidebar styles */
+.trend-analysis-sidebar {
+    width: 20rem;
+    padding: 2rem;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 2rem;
+}
+
+/* Form styles */
+.trend-analysis-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.trend-analysis-form-section {
+    margin-bottom: 15px;
+}
+
+.trend-analysis-form-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #040811;
+    margin-bottom: 10px;
+}
+
+.trend-analysis-form-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #271111;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #555555;
+}
+
+.trend-analysis-form-button {
+    padding: 10px 20px;
+    background-color: #0f1f44;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.trend-analysis-form-button:hover {
+    background-color: #02070c;
+}
+
+/* Results section styles */
+.trend-analysis-results {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -5rem;
+    margin-left: 14rem; /* Adjusted margin for spacing */
+    color: #0f1f44; /* Text color */
+}
+
+.trend-analysis-results-chart {
+    width: 100%;
+    margin-top: 0;
+}
+
+/* Loading spinner styles */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30rem;
+    margin-left: -20rem;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    .trend-analysis-sidebar {
+        width: 18rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .trend-analysis-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    .trend-analysis-sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .trend-analysis-results {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .trend-analysis-form-input {
+        width: 100%;
+    }
+    .trend-analysis-form-button {
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20%;
+    }
+    .trend-analysis-results-chart {
+        width: 100%;
+    }
+}
+

@@ -1,0 +1,32 @@
+/* src/components/predictions/getStarted.css */
+
+.contentt {
+     margin-left: 250px; /* Same as sidebar width */
+     padding: 20px; 
+    transition: margin-left 0.3s ease;
+    padding-top: 5rem;
+    margin-top: 5rem;
+  }
+  
+  .content.full-width {
+    margin-left: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+  }
+  

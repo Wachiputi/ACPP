@@ -1,0 +1,28 @@
+/* Navbar.css */
+.navbar {
+  padding: 10px 20px; 
+}
+.navbar-brand {
+    margin-right: auto;
+    font-size: 2rem;
+    font-weight: bolder; /* Pushes the brand to the left */
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    color: white;
+    margin-right: 10px; 
+  }
+  
+  .navbar-nav .nav-item:last-child .nav-link {
+    margin-right: 0; /* Remove right margin for the last nav item */
+  }
+  
+  .navbar-nav .nav-item .nav-link.active {
+    color:rgb(6, 14, 43);
+  }
+  
+  .navbar-nav .nav-item .nav-link:hover {
+    color: orange;
+    transition: color 0.3s ease-in-out;
+  }
+  
