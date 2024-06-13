@@ -1,4 +1,5 @@
 import React from 'react';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 function Home() {
@@ -86,16 +87,16 @@ const ChooseUs = () => (
         <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12">
           <div className="padding_with">
             <div className="row">
-              <ChooseBox icon="icon1.png" title="Lower Costs" text="Expect reduced expenses due to optimized processes and resource management." />
-              <ChooseBox icon="icon2.png" title="Budget Control" text="Maintain financial stability with accurate forecasting and cost management." />
-              <ChooseBox icon="icon3.png" title="Price Stability" text="Ensure consistency in pricing strategies for sustainable profitability." />
-              <ChooseBox icon="icon4.png" title="Market Insights" text="Leverage expert analysis to make informed decisions in volatile markets." />
+            <ChooseBox icon="fas fa-dollar-sign" title="Lower Costs" text="Expect reduced expenses due to optimized processes and resource management." />
+              <ChooseBox icon="fas fa-chart-line" title="Budget Control" text="Maintain financial stability with accurate forecasting and cost management." />
+              <ChooseBox icon="fas fa-balance-scale" title="Price Stability" text="Ensure consistency in pricing strategies for sustainable profitability." />
+              <ChooseBox icon="fas fa-lightbulb" title="Market Insights" text="Leverage expert analysis to make informed decisions in volatile markets." />
             </div>
           </div>
         </div>
         <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12">
           <div className="choose_img">
-            <figure><img src="images/food.jpg" alt="#" /></figure>
+            <figure><img src="maizw.jpg" alt="#" /></figure>
           </div>
         </div>
       </div>
@@ -135,9 +136,9 @@ const ProductSection = () => (
     </div>
     <div className="container-fluid">
       <div className="row">
-        <ProductBox img="product1.jpg" title="vegetable" />
-        <ProductBox img="product2.jpg" title="weat" />
-        <ProductBox img="product3.jpg" title="fruit" />
+        <ProductBox img="Maizw.jpg" title="vegetable" />
+        <ProductBox img="beans.jpg" title="weat" />
+        <ProductBox img="cassava.jpg" title="fruit" />
         <ProductBox img="product4.jpg" title="sunflowere" large />
         <ProductBox img="product5.jpg" title="Livestock" />
       </div>
