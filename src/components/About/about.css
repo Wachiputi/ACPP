@@ -31,18 +31,21 @@
   }
   
   a:hover {
-    color: #406aff;
+    color: #0b1846;
     text-decoration: none;
   }
   
   h1,
   h2,
   h3,
-  
   h5,
   h6 {
-    font-family: var(--font-primary);
+    font-family: var(--font-default);
   }
+.abty{
+  color: var(--color-default);
+}
+
   
 .featured-services .service-item {
   position: relative;
@@ -240,7 +243,7 @@ section {
   font-weight: 700;
   font-size: 32px;
   font-family: var(--font-secondary);
-  color: var(--color-primary);
+  color: var(--color-default);
 }
 
 .about .content ul {
@@ -257,7 +260,7 @@ section {
 .about .content ul i {
   flex-shrink: 0;
   font-size: 48px;
-  color: var(--color-primary);
+  color: var(--color-default);
   margin-right: 20px;
   line-height: 0;
 }

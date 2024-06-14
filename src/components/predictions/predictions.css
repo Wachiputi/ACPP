@@ -99,7 +99,8 @@
     align-items: center;
     margin-top: -5rem;
     margin-left: 14rem;
-    color: #0f1f44; /* Added space between sidebar and results */
+    font-size: small;
+    color: #ffffff; /* Added space between sidebar and results */
 }
 
 .predictions-results-chart {
@@ -110,7 +111,7 @@
 .predictions-results-info {
     margin-top: 20px;
     text-align: left;
-    background-color: #fcfcfc;
+    /* background-color: #fcfcfc; */
     padding: 10px;
     border-radius: 5px;
 }

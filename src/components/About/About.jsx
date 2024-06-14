@@ -33,7 +33,7 @@ const About = () => {
           <a href="https://www.youtube.com/watch?v=bTpzXfPtFow" className="glightbox play-btn" />
         </div>
         <div className="col-lg-6 content order-last  order-lg-first">
-          <h3>About Yield Wise</h3>
+          <h3 className="abty">About Yield Wise</h3>
           <p>
            Our company, YieldWise, is dedicated to revolutionizing the agricultural industry through advanced price projection system.we aim to provide accurate and reliable price projections, empowering farmers to make informed decisions and optimize their profitability.          </p>
           <ul>
