@@ -27,8 +27,8 @@ DATA_PATH = Path.cwd() / 'data' / 'wfp_food_prices_mwi.csv'
 data = pd.read_csv(DATA_PATH)
 
 # Clean data
-data.fillna(method='bfill', inplace=True)
-
+#data.fillna(method='bfill', inplace=True)
+data.bfill(inplace=True)  # For backward fill
 # Function to prepare data for LSTM
 def prepare_data_for_lstm(data, scaler, seq_length=10):
     if data.empty:
