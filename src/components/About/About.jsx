@@ -9,12 +9,12 @@ const About = () => {
       <main id="main">
         {/* ======= Breadcrumbs ======= */}
         <div className="breadcrumbs">
-          <div className="page-header d-flex align-items-center" style={{backgroundImage: 'url("assets/img/page-header.jpg")'}}>
+          <div className="page-header d-flex align-items-center" style={{backgroundImage: 'url("assets/img/download.jpg")'}}>
             <div className="container position-relative">
               <div className="row d-flex justify-content-center">
                 <div className="col-lg-6 text-center">
                   <h2>About</h2>
-                  <p>ACPP is an online service/consultant, that offers farmers and traders predictive insights into future price movements to avoid indecision which reduces uncertainty and improves planning. The level of accuracy is set as a distinction for this system against our competetors.</p>
+                  <p>Yield Wise is an online service/consultant, that offers farmers and traders predictive insights into future price movements to avoid indecision which reduces uncertainty and improves planning. The level of accuracy is set as a distinction for this system against our competetors.</p>
                 </div>
               </div>
             </div>
@@ -33,7 +33,7 @@ const About = () => {
           <a href="https://www.youtube.com/watch?v=bTpzXfPtFow" className="glightbox play-btn" />
         </div>
         <div className="col-lg-6 content order-last  order-lg-first">
-          <h3>About ACPP</h3>
+          <h3>About Yield Wise</h3>
           <p>
            Our company, YieldWise, is dedicated to revolutionizing the agricultural industry through advanced price projection system.we aim to provide accurate and reliable price projections, empowering farmers to make informed decisions and optimize their profitability.          </p>
           <ul>
