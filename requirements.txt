@@ -7,6 +7,6 @@ tensorflow
 datetime
 pathlib
 plotly
-Flask==2.0.2
+Flask>=2.2.0
 
 #api_key=='0fda13720529a45d9cbcb4c9f6b7f734'
