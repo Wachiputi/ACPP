@@ -1,0 +1,10 @@
+runtime: python38
+
+entrypoint: gunicorn -b :$PORT main:app
+
+handlers:
+- url: /.*
+  script: auto
+skip_files:
+  - ^\.git/
+  - \.pyc$
