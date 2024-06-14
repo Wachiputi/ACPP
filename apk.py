@@ -53,7 +53,7 @@ def train_lstm_model(X_train, y_train, X_test, y_test):
     early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     model.compile(optimizer=optimizer, loss='mse')
-    model.fit(X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test), callbacks=[early_stopping])
+    model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test), callbacks=[early_stopping])
     return model
 
 # Route to get raw data
