@@ -6,6 +6,7 @@
     padding: 40px;
     font-family: Arial, sans-serif;
     background-color: #040811;
+   
 }
 
 /* Title styles */
@@ -125,6 +126,7 @@
 @media (max-width: 992px) {
     .trend-analysis-content {
         flex-direction: column;
+        padding-bottom: 6rem;
         align-items: center;
     }
     .trend-analysis-sidebar {

@@ -9,7 +9,7 @@ function MAPEExplanation({ forecastData }) {
     if (mape <= 10) {
       return (
         <p>
-          The Mean Absolute Percentage Error (MAPE) of {mape.toFixed(2)}% indicates that our predictions are very accurate,
+          These Prices might varry from actual prices with a margin of {mape.toFixed(2)}% indicates that our predictions are very accurate,
           typically within 10% of the actual prices. You can use these forecasts with confidence for your planning and decision-making.
         </p>
       );
