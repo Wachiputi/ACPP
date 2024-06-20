@@ -14,7 +14,7 @@ const Footer = () => {
     <div className="row gy-4">
       <div className="col-lg-5 col-md-12 footer-info">
         <a href="index.html" className="logo d-flex align-items-center">
-          <span>Yield Wise </span>
+          <span> Yield Wise </span>
         </a>
         <p>Our company, YieldWise, is dedicated to revolutionizing the agricultural industry through 
           advanced price projection system.we aim to provide accurate and reliable price projections,
@@ -59,7 +59,7 @@ const Footer = () => {
   </div>
   <div className="container mt-4">
     <div className="copyright">
-      © Copyright <strong><span>YieldWise</span></strong>. All Rights Reserved
+    <img className="logo" src="logo.png" alt="" /> © Copyright <strong><span>YieldWise</span></strong>. All Rights Reserved
     </div>
     <div className="credits">
   

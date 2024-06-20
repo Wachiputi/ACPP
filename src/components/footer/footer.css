@@ -14,6 +14,9 @@
    
 
   }
+  .logo{
+    max-height: 2rem;
+  }
  
   .footer .footer-info .logo {
     line-height: 0;

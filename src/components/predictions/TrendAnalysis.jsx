@@ -6,12 +6,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ThreeDots } from 'react-loader-spinner';
 import './trendAnalysis.css'; // Updated CSS import
 
-import Footer from '../footer/Footer';
+import Footer from '../footer/Footer.jsx';
 
 function TrendAnalysis() {
   const [option, setOption] = useState('Maize (new harvest)');
-  const [selectedDistrict, setSelectedDistrict] = useState('Dedza');
-  const [selectedMarket, setSelectedMarket] = useState('Ntakataka');
+  const [selectedDistrict, setSelectedDistrict] = useState('Blantyre');
+  const [selectedMarket, setSelectedMarket] = useState('Lunzu');
   const [startDate, setStartDate] = useState(new Date('2016-01-01'));
   const [endDate, setEndDate] = useState(new Date());
   const [plotData, setPlotData] = useState(null);
@@ -30,19 +30,20 @@ function TrendAnalysis() {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/historical_data_plot', requestData);
-      const { historical_data, message } = response.data;
+      // const response = await axios.post('http://localhost:5000/historical_data_plot', requestData);
+      const response = await axios.post('https://yieldwize.onrender.com/historical_data_plot', requestData);
+      const historical_data = response.data;
 
       if (!historical_data || historical_data.length === 0) {
         throw new Error("No historical data available for the selected filters.");
       }
 
       const plotData = {
-        x: historical_data.map(item => item.date),
+        x: historical_data.map(item => new Date(item.date)),
         y: historical_data.map(item => item.price),
         type: 'scatter',
         mode: 'lines+markers',
-        marker: { color: 'blue' },
+        marker: { color: 'green' },
         name: 'Price'
       };
 
@@ -62,12 +63,7 @@ function TrendAnalysis() {
   };
 
   const marketsDict = {
-    'Dedza': ['Ntakataka'],
-    'Mzimba': ['Jenda'],
-    'Blantyre': ['Lunzu'],
-    'Ntcheu': ['Chimbiya', 'Golomoti', 'Ntcheu Boma'],
-    'Dowa': ['Nsungwi', 'Mponela'],
-    'Zomba': ['Thondwe', 'Jali', 'Chinamwali', 'Songani', 'Mulomba', 'Mayaka']
+    'Blantyre': ['Lunzu']
   };
 
   return (
@@ -82,8 +78,7 @@ function TrendAnalysis() {
               <label className="trend-analysis-form-label">Select Commodity:</label>
               <select value={option} onChange={(e) => setOption(e.target.value)} className="trend-analysis-form-input">
                 <option value="Maize (new harvest)">Maize (new harvest)</option>
-                <option value="Beans">Beans</option>
-                <option value="Rice">Rice</option>
+               
               </select>
             </div>
             <div className="trend-analysis-form-section">
@@ -131,7 +126,7 @@ function TrendAnalysis() {
                 <h2 className="trend-analysis-title">Historical Prices Trend</h2>
                 <Plot
                   data={plotData}
-                  layout={{ width: 800, height: 400, title: 'Historical Prices Trend' }}
+                  layout={{ width: 800, height: 400, title: 'Historical Prices Trend', xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
                 />
               </div>
             )

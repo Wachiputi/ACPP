@@ -7,6 +7,10 @@
     font-size: 2rem;
     font-weight: bolder; /* Pushes the brand to the left */
   }
+  .logo{
+   
+    max-height: 3rem;
+  }
   
   .navbar-nav .nav-item .nav-link {
     color: white;
