@@ -30,7 +30,7 @@ const About = () => {
           <div className="row gy-4">
         <div className="col-lg-6 position-relative align-self-start order-lg-last order-first">
           <img src="assets/img/about.png" className="img-fluid" alt />
-          <a href="https://www.youtube.com/watch?v=bTpzXfPtFow" className="glightbox play-btn" />
+          <a href="https://www.youtube.com/watch?v=LIEHvmzFaHo" className="glightbox play-btn" />
         </div>
         <div className="col-lg-6 content order-last  order-lg-first">
           <h3 className="abty">About Yield Wise</h3>
@@ -80,9 +80,9 @@ const About = () => {
                   <img src="assets/team/team-1.jpg" className="img-fluid" alt="Walter White" />
                   <div className="member-content">
                     <h4>Steve Chisale</h4>
-                    <span>Web Development</span>
+                    <span>Back-End Developer</span>
                     
-                    <p>Proffessional web designer and developer From university of Malawi, the ui designer and developer of acppi</p>
+                    <p className="memberp">api/Backend developer of Yieldwise</p>
                     <div className="social">
                       <a href="https://github.com/Wachiputi"><i className="bi bi-github" /></a>
                       <a href="www.linkedin.com/in/stcchisale-chisale-319b292b6"><i className="bi bi-linkedin" /></a>
@@ -97,8 +97,8 @@ const About = () => {
                   <img src="assets/team/team-2.jpg" className="img-fluid" alt="Sarah Jhinson" />
                   <div className="member-content">
                     <h4>King Isaac Banda</h4>
-                    <span>Marketing</span>
-                    <p>Proffessional web designer and developer From university of Malawi, the ui designer and developer of acppi</p>
+                    <span>Back-End Developer</span>
+                    <p className="memberp">Backend designer and developer of Yield Wise</p>
                     <div className="social">
                       <a href="https://github.com/Bsc-com-04-19"><i className="bi bi-github" /></a>
                       <a href="www.linkedin.com/in/isaac-king-banda-6ab181241"><i className="bi bi-linkedin" /></a>
@@ -113,8 +113,8 @@ const About = () => {
                   <img src="assets/team/team-3.jpg" className="img-fluid" alt="William Anderson" />
                   <div className="member-content">
                     <h4>Liana Chagunda</h4>
-                    <span>backend developer</span>
-                    <p>Proffessional web designer and developer From university of Malawi, the ui designer and developer of acppi</p>
+                    <span>UI developer</span>
+                    <p className="memberp"> The ui designer and developer of Yieldwise</p>
                     <div className="social">
                       <a href="https://github.com/Bsc-com-26-19"><i className="bi bi-github" /></a>
                       <a href="#"><i className="bi bi-facebook" /></a>
@@ -129,8 +129,8 @@ const About = () => {
                   <img src="assets/team/team-4.jpg" className="img-fluid" alt="Oliver Johnson" />
                   <div className="member-content">
                     <h4>Clement T Katumbi</h4>
-                    <span>Api developer</span>
-                    <p>Proffessional web designer and developer From university of Malawi, the ui designer and developer of acppi</p>
+                    <span>UI developer</span>
+                    <p className="memberp">Yieldwise frontend developer </p>
                     <div className="social">
                       <a href="https://github.com/clem-thulawena"><i className="bi bi-github" /></a>
                       <a href="#"><i className="bi bi-facebook" /></a>

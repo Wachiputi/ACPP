@@ -406,16 +406,17 @@ section {
  font-style: var(--color-primary);
 }
 
-.team .member span {
-  font-style: italic;
+.team.member span {
+  /* font-style: italic; */
   display: block;
   font-size: 13px;
-  color: #0d1022;
+  color: #1c220d;
 }
 
-.team .member p {
+
+.memberp{
   padding-top: 10px;
-  font-size: 14px;
+  font-size: 0.85rem;
   font-style: italic;
   color: #0d1022;
 }
