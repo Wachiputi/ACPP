@@ -13,6 +13,7 @@ import tensorflow as tf
 from tensorflow.keras.losses import MeanSquaredError
 from pathlib import Path
 import logging
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -39,6 +40,21 @@ mse = MeanSquaredError()
 # Load the pre-trained LSTM model
 MODEL_PATH = Path.cwd() / 'models' / 'lstm_model.h5'
 lstm_model = load_model(MODEL_PATH, custom_objects={'mse': mse})
+
+# Swagger configuration
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Agricultural Commodity Price Projection API"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
 
 # Function to prepare data for LSTM
 def prepare_data_for_lstm(data, seq_length=10):
@@ -166,6 +182,7 @@ def forecast_prices():
         }
 
         return jsonify(result)
+       
 
     except Exception as e:
         logging.error(f"Error during forecasting: {e}")
@@ -212,4 +229,4 @@ def plot_historical_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5000)

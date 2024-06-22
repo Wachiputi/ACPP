@@ -3,17 +3,14 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import tensorflow as tf
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_percentage_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_absolute_percentage_error
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
+from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler
 import datetime
-from tensorflow.keras.callbacks import EarlyStopping
 from pathlib import Path
-import statsmodels.api as sm
-from prophet import Prophet
 
 # Set title and sidebar info
 st.title('Agricultural Commodity Price Projection')
@@ -22,25 +19,28 @@ st.sidebar.info('Welcome to the Agricultural Commodity Price Projection App. Cho
 # Sidebar options
 option = st.sidebar.selectbox('Select Crop', ['Maize (new harvest)', 'Beans'])
 start_date = st.sidebar.date_input('Start Date', value=datetime.date(2016, 1, 1))
-num_days_forecast = st.sidebar.number_input('Number of days to forecast', value=100, min_value=1, max_value=365, step=1)
+num_days_forecast = st.sidebar.number_input('Number of days to forecast', value=180, min_value=1, max_value=365, step=1)
 
-selected_district = st.sidebar.selectbox('Select District', ['Dedza', 'Mzimba', 'Blantyre', 'Ntcheu', 'Dowa', 'Zomba'])
+selected_district = st.sidebar.selectbox('Select District', ['Dedza', 'Mzimba', 'Blantyre', 'Ntcheu', 'Dowa'])
 
 # Filter markets based on selected district
-markets_dict = {
-    'Dedza': ['Ntakataka'],
-    'Mzimba': ['Jenda'],
-    'Blantyre': ['Lunzu'],
-    'Ntcheu': ['Chimbiya', 'Golomoti', 'Ntcheu Boma'],
-    'Dowa': ['Nsungwi', 'Mponela'],
-    'Zomba': ['Thondwe', 'Jali', 'Chinamwali', 'Songani', 'Mulomba', 'Mayaka']
-}
-selected_market = st.sidebar.selectbox('Select Market', markets_dict[selected_district])
-model_choice = st.sidebar.selectbox('Select Model', ['LSTM', 'ARIMA', 'Prophet'])
+if selected_district == 'Dedza':
+    markets = ['Nsikawanjala', 'Ntakataka']
+elif selected_district == 'Mzimba':
+    markets = ['Jenda']
+elif selected_district == 'Blantyre':
+    markets = ['Lunzu']
+elif selected_district == 'Ntcheu':
+    markets = ['Chimbiya', 'Golomoti', 'Ntcheu Boma']
+elif selected_district == 'Dowa':
+    markets = ['Nsungwi', 'Mponela']
+
+selected_market = st.sidebar.selectbox('Select Market', markets)
 forecast_button = st.sidebar.button('Predict')
 
 # Define the path to the CSV file
 DATA_PATH = Path.cwd() / 'data' / 'wfp_food_prices_mwi.csv'
+WEATHER_DATA_PATH = Path.cwd() /'data'/'boston_weather_data.csv'
 
 # Read the data from the CSV file
 data = pd.read_csv(DATA_PATH)
@@ -87,117 +87,110 @@ if not filtered_df.empty:
     fig = px.line(filtered_df, x='date', y='price', title='Historical Prices Trend', labels={'price': 'Price', 'date': 'Date'})
     st.plotly_chart(fig)
 
+# Read the weather data from the CSV file
+weather_data = pd.read_csv(WEATHER_DATA_PATH)
+
+# Display the raw weather data using Streamlit
+st.subheader("Raw Weather Data")
+st.write(weather_data)
+
+# Display the columns of the weather data to check for the correct date column name
+st.subheader("Weather Data Columns")
+st.write(weather_data.columns)
+
+# Ensure the 'date' column is in datetime format
+if 'date' not in weather_data.columns:
+    st.error("The weather data does not contain a 'date' column.")
+else:
+    weather_data['date'] = pd.to_datetime(weather_data['date'])
+
+    # Plot Rainfall
+    fig_rainfall = px.line(weather_data, x='date', y='rainfal', title='Rainfall Over Time', labels={'rainfal': 'Rainfall', 'date': 'Date'})
+    st.plotly_chart(fig_rainfall)
+
+    # Plot Maximum Temperature
+    fig_max_temp = px.line(weather_data, x='date', y='maximum temperature', title='Maximum Temperature Over Time', labels={'maximum temperature': 'Maximum Temperature', 'date': 'Date'})
+    st.plotly_chart(fig_max_temp)
+
+    # Plot Average Air Temperature
+    fig_avg_temp = px.line(weather_data, x='date', y='average air temp', title='Average Air Temperature Over Time', labels={'average air temp': 'Average Air Temperature', 'date': 'Date'})
+    st.plotly_chart(fig_avg_temp)
+
 if forecast_button:
-    # Further filter data to include only the historical prices for the selected market
-    historical_data = ft_data[(ft_data['commodity'] == option) & (ft_data['district'] == selected_district) & (ft_data['market'] == selected_market)]
-    
-    if model_choice == 'LSTM':
-        # Prepare the data for LSTM
-        def prepare_data_for_lstm(data, scaler, seq_length=10):
-            # Convert price column to array
-            prices = data['price'].values
+    # Prepare the data for LSTM
+    def prepare_data_for_lstm(data, scaler, seq_length=10):
+        # Convert price column to array
+        prices = data['price'].values
 
-            # Normalize prices using the provided scaler
-            prices_normalized = scaler.fit_transform(prices.reshape(-1, 1))
+        # Normalize prices using the provided scaler
+        prices_normalized = scaler.fit_transform(prices.reshape(-1, 1))
 
-            # Create sequences and corresponding targets
-            sequences = []
-            targets = []
-            for i in range(len(prices_normalized) - seq_length):
-                sequences.append(prices_normalized[i:i+seq_length])
-                targets.append(prices_normalized[i+seq_length])
+        # Create sequences and corresponding targets
+        sequences = []
+        targets = []
+        for i in range(len(prices_normalized) - seq_length):
+            sequences.append(prices_normalized[i:i+seq_length])
+            targets.append(prices_normalized[i+seq_length])
 
-            return np.array(sequences), np.array(targets), scaler
+        return np.array(sequences), np.array(targets), scaler
 
-        # Create a scaler object
-        scaler = MinMaxScaler()
+    # Create a scaler object
+    scaler = MinMaxScaler()
 
-        # Prepare data for LSTM
-        X, y, scaler = prepare_data_for_lstm(historical_data, scaler)
+    # Prepare data for LSTM
+    X, y, scaler = prepare_data_for_lstm(filtered_df, scaler)
 
-        # Split data into training and testing sets
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # Split data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Increase model complexity
-        model = Sequential([
-            LSTM(100, return_sequences=True, input_shape=(X_train.shape[1], X_train.shape[2])),
-            LSTM(100),
-            Dense(1)
-        ])
+    # Define the LSTM model
+    model = Sequential([
+        LSTM(50, input_shape=(X_train.shape[1], X_train.shape[2])),
+        Dense(1)
+    ])
 
-        # Increase training duration and use early stopping
-        early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+    # Compile the model
+    model.compile(optimizer='adam', loss='mse')
 
-        # Hyperparameter tuning
-        learning_rate = 0.001
-        optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+    # Train the model
+    model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test))
 
-        # Compile the model with the specified optimizer
-        model.compile(optimizer=optimizer, loss='mse')
+    # Save the model
+    model.save("lstm_model.h5")
 
-        # Train the model with early stopping
-        history = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test), callbacks=[early_stopping])
+    # Evaluate the model
+    mse = model.evaluate(X_test, y_test)
+    st.write(f'Mean Squared Error: {mse}')
 
-        # Evaluate the model
-        mse = model.evaluate(X_test, y_test)
-        st.write(f'Mean Squared Error: {mse}')
+    # Calculate R2 score
+    y_pred = model.predict(X_test)
+    r2 = r2_score(y_test, y_pred)
+    st.write(f'R2 Score: {r2}')
 
-        # Calculate R2 score
-        y_pred = model.predict(X_test)
-        r2 = r2_score(y_test, y_pred)
-        st.write(f'R2 Score: {r2}')
+    mape = mean_absolute_percentage_error(y_test, y_pred)
+    st.write(f'Mean Absolute Percentage Error (MAPE): {mape * 100:.2f}%')
 
-        mae = mean_absolute_error(y_test, y_pred)
-        st.write(f'Mean Absolute Error (MAE): {mae}')
+    # Forecasting for the specified number of days
+    last_sequence = X_test[-1]
+    forecast_prices_normalized = []
+    for _ in range(num_days_forecast):
+        next_price = model.predict(last_sequence[np.newaxis, :, :])
+        forecast_prices_normalized.append(next_price)
+        last_sequence = np.append(last_sequence[1:], next_price, axis=0)
 
-        mape = mean_absolute_percentage_error(y_test, y_pred)
-        st.write(f'Mean Absolute Percentage Error (MAPE): {mape * 100:.2f}%')
+    # Inverse transform the forecasted prices
+    forecast_prices = scaler.inverse_transform(np.array(forecast_prices_normalized).reshape(-1, 1))
 
-        # Forecasting for the specified number of days
-        last_sequence = X_test[-1]
-        forecast_prices_normalized = []
-        for _ in range(num_days_forecast):
-            next_price = model.predict(last_sequence[np.newaxis, :, :])
-            forecast_prices_normalized.append(next_price)
-            last_sequence = np.append(last_sequence[1:], next_price, axis=0)
-
-        # Inverse transform the forecasted prices
-        forecast_prices = scaler.inverse_transform(np.array(forecast_prices_normalized).reshape(-1, 1))
-
-    elif model_choice == 'ARIMA':
-        # Prepare data for ARIMA
-        arima_data = historical_data.set_index('date')['price']
-        arima_data = arima_data.astype(float)  # Ensure the data is of float type
-        arima_model = sm.tsa.ARIMA(arima_data, order=(5, 1, 0))
-        arima_result = arima_model.fit()
-        forecast_prices = arima_result.forecast(steps=num_days_forecast)
-        forecast_dates = [arima_data.index[-1] + datetime.timedelta(days=i) for i in range(1, num_days_forecast + 1)]
-        forecast_prices = np.array(forecast_prices).reshape(-1, 1)
-
-    elif model_choice == 'Prophet':
-        # Prepare data for Prophet with log transformation
-        prophet_data = historical_data[['date', 'price']].rename(columns={'date': 'ds', 'price': 'y'})
-        prophet_data['y'] = np.log(prophet_data['y'])  # Log transform the prices
-        prophet_model = Prophet()
-        prophet_model.fit(prophet_data)
-        future = prophet_model.make_future_dataframe(periods=num_days_forecast)
-        forecast = prophet_model.predict(future)
-        forecast['yhat'] = np.exp(forecast['yhat'])  # Exponentiate the results to get back to original scale
-        forecast_prices = forecast['yhat'].values[-num_days_forecast:]
-        forecast_dates = forecast['ds'].dt.date.values[-num_days_forecast:]
-
-    # Generate dates for the forecasted prices 
-    if model_choice != 'ARIMA' and model_choice != 'Prophet':
-        forecast_dates = [datetime.date.today() + datetime.timedelta(days=i) for i in range(num_days_forecast)]
+    # Generate dates for the forecasted prices
+    forecast_dates = [datetime.date.today() + datetime.timedelta(days=i) for i in range(num_days_forecast)]
 
     # Display the predicted prices in a table
     st.write("Predicted Prices for the next period:")
-    forecast_df = pd.DataFrame({'Date': forecast_dates, 'Predicted Price': forecast_prices.flatten()})
-    st.write(forecast_df)
+    predicted_prices_df = pd.DataFrame(forecast_prices, index=forecast_dates, columns=["Price"])
+    st.write(predicted_prices_df)
 
-    # Generate graph for the forecasted prices
-    fig_forecast = go.Figure()
-    fig_forecast.add_trace(go.Scatter(x=filtered_df['date'], y=filtered_df['price'], mode='lines', name='Historical Prices'))
-    fig_forecast.add_trace(go.Scatter(x=forecast_dates, y=forecast_prices.flatten(), mode='lines', name='Forecasted Prices'))
-    fig_forecast.update_layout(title='Price Forecast', xaxis_title='Date', yaxis_title='Price')
-    st.plotly_chart(fig_forecast)
+    # Plot forecasted prices using a line plot
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=forecast_dates, y=forecast_prices.flatten(), mode='lines+markers', name='Forecasted Prices'))
+    fig.update_layout(title='Forecasted Prices', xaxis_title='Date', yaxis_title='Price')
+    st.plotly_chart(fig)

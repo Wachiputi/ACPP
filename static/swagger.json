@@ -1,0 +1,253 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is the API documentation for the Agricultural Commodity Price Projection.",
+      "version": "1.0.0",
+      "title": "Agricultural Commodity Price Projection API",
+      "contact": {
+        "email": "example@example.com"
+      }
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Data",
+        "description": "Endpoints for data retrieval and filtering"
+      },
+      {
+        "name": "Forecast",
+        "description": "Endpoints for price forecasting"
+      },
+      {
+        "name": "Plot",
+        "description": "Endpoints for plotting data"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/raw_data": {
+        "get": {
+          "tags": [
+            "Data"
+          ],
+          "summary": "Get raw data",
+          "description": "Retrieve raw data from the CSV files.",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Data"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/filtered_data": {
+        "post": {
+          "tags": [
+            "Data"
+          ],
+          "summary": "Filter data",
+          "description": "Filter data based on the selected commodity, district, and market.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/FilterRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Data"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/forecast": {
+        "post": {
+          "tags": [
+            "Forecast"
+          ],
+          "summary": "Forecast prices",
+          "description": "Forecast future prices based on historical data and weather data.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/ForecastRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "$ref": "#/definitions/ForecastResponse"
+              }
+            }
+          }
+        }
+      },
+      "/historical_data_plot": {
+        "post": {
+          "tags": [
+            "Plot"
+          ],
+          "summary": "Plot historical data",
+          "description": "Plot historical data based on the provided parameters.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/PlotRequest"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Data"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Data": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "commodity": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "rainfall": {
+            "type": "number"
+          },
+          "temp": {
+            "type": "number"
+          }
+        }
+      },
+      "FilterRequest": {
+        "type": "object",
+        "properties": {
+          "option": {
+            "type": "string"
+          },
+          "selected_district": {
+            "type": "string"
+          },
+          "selected_market": {
+            "type": "string"
+          }
+        }
+      },
+      "ForecastRequest": {
+        "type": "object",
+        "properties": {
+          "option": {
+            "type": "string"
+          },
+          "selected_district": {
+            "type": "string"
+          },
+          "selected_market": {
+            "type": "string"
+          },
+          "num_months_forecast": {
+            "type": "integer"
+          }
+        }
+      },
+      "ForecastResponse": {
+        "type": "object",
+        "properties": {
+          "forecasted_prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ForecastedPrice"
+            }
+          },
+          "mse": {
+            "type": "number"
+          },
+          "mae": {
+            "type": "number"
+          },
+          "mape": {
+            "type": "number"
+          },
+          "r2": {
+            "type": "number"
+          }
+        }
+      },
+      "ForecastedPrice": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "predicted_price": {
+            "type": "number"
+          }
+        }
+      },
+      "PlotRequest": {
+        "type": "object",
+        "properties": {
+          "option": {
+            "type": "string"
+          },
+          "selected_district": {
+            "type": "string"
+          },
+          "selected_market": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  
