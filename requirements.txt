@@ -1,3 +1,4 @@
+
 streamlit
 pandas
 numpy
@@ -9,6 +10,7 @@ pathlib
 plotly
 Flask>=2.2.0
 flask_cors
+flask-swagger-ui
 gunicorn
 
 
